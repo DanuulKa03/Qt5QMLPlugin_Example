@@ -1,0 +1,1 @@
+This project is dedicated to creating a test case for [Qt5QMLPlugin](https://github.com/mentalfl0w/Qt5QMLPlugin)
