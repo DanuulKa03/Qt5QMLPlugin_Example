@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.22)
 
 project(StackView-Template
     VERSION 0.1
@@ -16,12 +16,22 @@ include(${CMAKE_SOURCE_DIR}/thirdparty/Qt5QMLPlugin/Qt5QMLPlugin.cmake)
 
 set(PROJECT_SOURCES
     main.cpp
-    qml.qrc
 )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
-add_executable(${PROJECT_NAME}
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Components)
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Common)
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
+
+qt5_add_executable(${PROJECT_NAME}
    ${PROJECT_SOURCES}
+)
+
+qt5_add_qml_module(${PROJECT_NAME}
+        URI ${PROJECT_NAME}
+        VERSION 1.0
+        RESOURCE_PREFIX "/"
+        QML_FILES ${CMAKE_SOURCE_DIR}/main.qml
 )
 
 list(APPEND QML_DIRS "${CMAKE_SOURCE_DIR}/qml")
@@ -34,6 +44,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
     FormsLib
+    ComponentsLib
+    Common
+    Pages
 )
 
 #set_target_properties(${PROJECT_NAME}

@@ -8,7 +8,7 @@ target_link_libraries(FormsLib PRIVATE
 qt5_add_qml_module(FormsLib
         URI Forms
         VERSION 1.0
-        RESOURCE_PREFIX "/"
+        RESOURCE_PREFIX "/qml/UILibrary"
         QML_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/BaseForm.qml
         ${CMAKE_CURRENT_SOURCE_DIR}/OneButtonForm.qml
