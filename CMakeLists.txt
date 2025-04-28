@@ -20,7 +20,6 @@ set(PROJECT_SOURCES
 )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
-
 add_executable(${PROJECT_NAME}
    ${PROJECT_SOURCES}
 )
@@ -34,6 +33,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONF
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
+    FormsLib
 )
 
 #set_target_properties(${PROJECT_NAME}
