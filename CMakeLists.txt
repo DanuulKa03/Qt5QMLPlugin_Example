@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
-option(SUBMODULE_BUILD_STATIC "Build submodule as static lib." ON)
+option(SUBMODULE_BUILD_STATIC "Build submodule as static lib." OFF)
 set(SUBMODULE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/output)
 set(SUBMODULE_IMPORT_PATH ${SUBMODULE_OUTPUT_PATH}/qml)
 
@@ -22,9 +22,9 @@ set(PROJECT_SOURCES
     main.cpp
 )
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Components)
-add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
 
 qt5_add_executable(${PROJECT_NAME}
