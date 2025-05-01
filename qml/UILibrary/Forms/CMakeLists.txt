@@ -1,16 +1,13 @@
 project(FormsLib VERSION 1.0 LANGUAGES CXX)
 
 set(URI_NAME "Forms")
-set(DEPENDENCIES "Common" "Pages")
+set(DEPENDENCIES "Common")
 
 if(SUBMODULE_BUILD_STATIC)
     qt5_add_library(${PROJECT_NAME} STATIC)
 else()
     qt5_add_library(${PROJECT_NAME} SHARED)
-    set(__qml_plugin_depend_module ${DEPENDENCIES})
 endif()
-
-add_dependencies(${PROJECT_NAME} ${DEPENDENCIES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Quick
@@ -37,3 +34,7 @@ qt5_add_qml_module(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/OneButtonForm.qml
         ${CMAKE_CURRENT_SOURCE_DIR}/TwoButtonsForm.qml
 )
+
+foreach(depend ${DEPENDENCIES})
+    add_dependencies(${URI_NAME}plugin ${depend}plugin)
+endforeach()

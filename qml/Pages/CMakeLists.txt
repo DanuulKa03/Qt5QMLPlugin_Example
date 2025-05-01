@@ -1,15 +1,13 @@
 project(Pages VERSION 1.0 LANGUAGES CXX)
 
 set(URI_NAME "Pages")
+set(DEPENDENCIES "Common" "Forms")
 
 if(SUBMODULE_BUILD_STATIC)
     qt5_add_library(${PROJECT_NAME} STATIC)
 else()
     qt5_add_library(${PROJECT_NAME} SHARED)
-    set(__qml_plugin_depend_module "Forms")
 endif()
-
-add_dependencies(${PROJECT_NAME} Common)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Quick
@@ -47,3 +45,7 @@ qt5_add_qml_module(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/Menu/MainMenuPage_Form.ui.qml
         ${CMAKE_CURRENT_SOURCE_DIR}/Splash/SplashPage_Form.ui.qml
 )
+
+foreach(depend ${DEPENDENCIES})
+    add_dependencies(${URI_NAME}plugin ${depend}plugin)
+endforeach()
