@@ -1,0 +1,90 @@
+name: Example App Build
+on:
+  push:
+    paths:
+      - '*.txt'
+      - 'qml/**'
+      - '*.qml'
+      - '3rdparty/**'
+      - '.github/workflows/app_build_workflow.yml'
+  pull_request:
+    paths:
+      - '*.txt'
+      - 'qml/**'
+      - '*.qml'
+      - '3rdparty/**'
+      - '.github/workflows/app_build_workflow.yml'
+      
+env:
+  REPO_NAME: ${{ github.event.repository.name }}
+  APP_NAME: Qt5QMLPlugin_Example
+  QT_VERSION: 5.15.2
+  QT_ARCH_LINUX: gcc_64
+  OS_LINUX: ubuntu-latest
+  RELEASE_OR_NIGHTLY: ${{ startsWith(github.ref, 'refs/tags/v') && 'RELEASE' || 'NIGHTLY' }}
+      
+jobs:
+  build-qt5-linux-gcc-shared:
+    name: Qt 5.15.2 Ubuntu (Shared Library)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          arch: ${{ env.QT_ARCH_LINUX }}
+      
+      - name: Set up Ninja
+        uses: seanmiddleditch/gha-setup-ninja@v4
+        with:
+          version: 1.10.2
+          
+      - name: ubuntu install GL library
+        run: sudo apt install -y libxcb-cursor0 libgl1-mesa-dev libxcb1-dev libgtk-3-dev libxkbcommon-x11-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-sync-dev  libxcb-render-util0-dev libxcb-shm0-dev
+        
+      - name: ubuntu install libfuse2
+        run: sudo apt install libfuse2
+        
+      - name: build ubuntu
+        run: |
+          ninja --version
+          cmake --version
+          mkdir build
+          cd build
+          cmake -DCMAKE_MESSAGE_LOG_LEVEL=STATUS -DCMAKE_PREFIX_PATH=/home/runner/work/${{ env.REPO_NAME }}/Qt/${{ env.QT_VERSION }}/gcc_64 -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Release -GNinja ..
+          cmake --build . --target all --config Release --parallel
+          
+      - name: install QT linux deploy
+        uses: miurahr/install-linuxdeploy-action@v1
+        with:
+          plugins: qt appimage
+          
+      - name: Check if svg file exists
+        run: if [ ! -f "StackView-Template.svg" ]; then echo "File not found, creating..."; touch StackView-Template.svg; fi
+
+      - name: package
+        run: |
+          # make sure Qt plugin finds QML sources so it can deploy the imported files
+          export QML_SOURCES_PATHS=./
+          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=StackView-Template.svg --executable=/home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/StackView-Template --appdir /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/
+          mv StackView-Template-*.AppImage ${{ env.APP_NAME }}_${{ env.OS_LINUX }}_Qt${{ env.QT_VERSION }}_shared_${{ env.RELEASE_OR_NIGHTLY }}.AppImage
+        
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP_NAME }}_${{ env.OS_LINUX }}_Qt${{ env.QT_VERSION }}_shared_${{ env.RELEASE_OR_NIGHTLY }}
+          path: ${{ env.APP_NAME }}_${{ env.OS_LINUX }}_Qt${{ env.QT_VERSION }}_shared_${{ env.RELEASE_OR_NIGHTLY }}.AppImage
+
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.APP_NAME }}_${{ env.OS_LINUX }}_Qt${{ env.QT_VERSION }}_shared_${{ env.RELEASE_OR_NIGHTLY }}.AppImage
+          asset_name: ${{ env.APP_NAME }}_${{  github.ref_name }}_${{ env.OS_LINUX }}_Qt${{ env.QT_VERSION }}_shared_${{ env.RELEASE_OR_NIGHTLY }}.AppImage
+          tag: ${{ github.ref }}
+          overwrite: true

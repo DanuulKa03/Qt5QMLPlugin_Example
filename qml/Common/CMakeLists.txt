@@ -1,7 +1,6 @@
-project(FormsLib VERSION 1.0 LANGUAGES CXX)
+project(Common VERSION 1.0 LANGUAGES CXX)
 
-set(URI_NAME "Forms")
-set(DEPENDENCIES "Common")
+set(URI_NAME "Common")
 
 if(SUBMODULE_BUILD_STATIC)
     qt5_add_library(${PROJECT_NAME} STATIC)
@@ -24,17 +23,20 @@ else()
     set(OUTPUT_DIR ${SUBMODULE_OUTPUT_PATH}/${RELATIVE_DIR}/${URI_NAME})
 endif()
 
+set(SINGLETON_QML 
+	${CMAKE_CURRENT_SOURCE_DIR}/Enums.qml
+        ${CMAKE_CURRENT_SOURCE_DIR}/Consts.qml
+	${CMAKE_CURRENT_SOURCE_DIR}/Colors.qml)
+
+foreach(singleton_qml ${SINGLETON_QML})
+    set_source_files_properties(${singleton_qml} PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+endforeach()
+
 qt5_add_qml_module(${PROJECT_NAME}
         URI ${URI_NAME}
         VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         RESOURCE_PREFIX "/${RELATIVE_DIR}"
         OUTPUT_DIRECTORY ${OUTPUT_DIR}
-        QML_FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/BaseForm.qml
-        ${CMAKE_CURRENT_SOURCE_DIR}/OneButtonForm.qml
-        ${CMAKE_CURRENT_SOURCE_DIR}/TwoButtonsForm.qml
+        QML_FILES ${SINGLETON_QML}
+        
 )
-
-foreach(depend ${DEPENDENCIES})
-    add_dependencies(${URI_NAME}plugin ${depend}plugin)
-endforeach()

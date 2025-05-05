@@ -1,7 +1,7 @@
-project(FormsLib VERSION 1.0 LANGUAGES CXX)
+project(ComponentsLib VERSION 1.0 LANGUAGES CXX)
 
-set(URI_NAME "Forms")
-set(DEPENDENCIES "Common")
+set(URI_NAME "Components")
+set(DEPENDENCIES "Common" "Pages")
 
 if(SUBMODULE_BUILD_STATIC)
     qt5_add_library(${PROJECT_NAME} STATIC)
@@ -30,9 +30,9 @@ qt5_add_qml_module(${PROJECT_NAME}
         RESOURCE_PREFIX "/${RELATIVE_DIR}"
         OUTPUT_DIRECTORY ${OUTPUT_DIR}
         QML_FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/BaseForm.qml
-        ${CMAKE_CURRENT_SOURCE_DIR}/OneButtonForm.qml
-        ${CMAKE_CURRENT_SOURCE_DIR}/TwoButtonsForm.qml
+        ${CMAKE_CURRENT_SOURCE_DIR}/TopPanel.qml
+        RESOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/TopPanel_Form.ui.qml
 )
 
 foreach(depend ${DEPENDENCIES})
