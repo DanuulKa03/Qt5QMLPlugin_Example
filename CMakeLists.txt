@@ -27,15 +27,14 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Components)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
 
-qt5_add_executable(${PROJECT_NAME}
-   ${PROJECT_SOURCES}
+qt5_add_resources_plus(QRC_FILES "qmls"
+    PREFIX "/${PROJECT_NAME}"
+    FILES ${CMAKE_SOURCE_DIR}/main.qml
 )
 
-qt5_add_qml_module(${PROJECT_NAME}
-        URI ${PROJECT_NAME}
-        VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-        RESOURCE_PREFIX "/"
-        QML_FILES ${CMAKE_SOURCE_DIR}/main.qml
+qt5_add_executable(${PROJECT_NAME}
+   ${PROJECT_SOURCES}
+   ${QRC_FILES}
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
