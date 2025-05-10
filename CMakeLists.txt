@@ -16,7 +16,7 @@ option(SUBMODULE_BUILD_STATIC "Build submodule as static lib." OFF)
 set(SUBMODULE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/output)
 set(SUBMODULE_IMPORT_PATH ${SUBMODULE_OUTPUT_PATH}/qml)
 
-include(${CMAKE_SOURCE_DIR}/thirdparty/Qt5QMLPlugin/Qt5QMLPlugin.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/dependencies.cmake)
 
 set(PROJECT_SOURCES
     main.cpp
