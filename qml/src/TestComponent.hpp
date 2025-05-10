@@ -15,5 +15,5 @@ class TestComponent : public QObject {
     signals:
       void textChanged();
 private:
-    QString m_text = QString("Hello World!");
+    QString m_text;
 };

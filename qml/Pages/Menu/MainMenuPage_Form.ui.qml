@@ -29,6 +29,8 @@ Forms.BaseForm {
 
         Core.TestComponent {
             id: test
+
+            text: qsTr("Hello World")
         }
 
         Label {
