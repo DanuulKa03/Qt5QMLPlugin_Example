@@ -1,7 +1,7 @@
-include "TestComponent.h"
+#include "qml/src/TestComponent.hpp"
 
 QString TestComponent::text() const {
-    return this->m_text;
+    return m_text;
 }
 
 void TestComponent::setText(const QString &text) {

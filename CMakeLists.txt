@@ -16,7 +16,7 @@ option(SUBMODULE_BUILD_STATIC "Build submodule as static lib." OFF)
 set(SUBMODULE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/output)
 set(SUBMODULE_IMPORT_PATH ${SUBMODULE_OUTPUT_PATH}/qml)
 
-include(${CMAKE_SOURCE_DIR}/thirdparty/Qt5QMLPlugin/Qt5QMLPlugin.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/dependencies.cmake)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -26,6 +26,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Components)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/src)
 
 qt5_add_resources_plus(QRC_FILES "qmls"
     PREFIX "/${PROJECT_NAME}"
@@ -59,6 +60,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ComponentsLib
     Common
     Pages
+    CoreLib
 )
 
 message("---------------------- Qt5QMLPlugin_Example ----------------------")
