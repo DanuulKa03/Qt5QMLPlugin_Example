@@ -7,7 +7,7 @@ import Forms 1.0 as Forms
 
 Forms.BaseForm {
     id: formSplashPage
-    pageName: qsTr("Старницы приветствия")
+    pageName: qsTr("Страницы приветствия")
 
     signal splashPageClicked()
 

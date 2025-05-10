@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 
 import Common 1.0 as Common
 import Forms 1.0 as Forms
+import org.example.core 1.0 as Core
 
 Forms.BaseForm {
     id: formMainMenuPage
@@ -25,6 +26,19 @@ Forms.BaseForm {
         anchors.centerIn: parent
 
         spacing: 10 * Common.Consts.yCoord
+
+        Core.TestComponent {
+            id: test
+        }
+
+        Label {
+            id: labelHelloWorld
+
+            Layout.preferredHeight: internal.buttonHeight
+            Layout.preferredWidth: internal.buttonWidth
+
+            text: test.text
+        }
 
         Button {
             id: settingButton

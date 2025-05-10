@@ -1,7 +1,7 @@
 project(Pages VERSION 1.0 LANGUAGES CXX)
 
 set(URI_NAME "Pages")
-set(DEPENDENCIES "Common" "Forms")
+set(DEPENDENCIES "Common" "Forms" "org_example_core")
 
 if(SUBMODULE_BUILD_STATIC)
     qt5_add_library(${PROJECT_NAME} STATIC)
