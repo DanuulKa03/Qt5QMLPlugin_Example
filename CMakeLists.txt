@@ -25,8 +25,8 @@ set(PROJECT_SOURCES
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Components)
-add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
 
 qt5_add_resources_plus(QRC_FILES "qmls"
     PREFIX "/${PROJECT_NAME}"

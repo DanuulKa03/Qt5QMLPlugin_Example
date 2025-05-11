@@ -1,4 +1,4 @@
-#include "qml/src/TestComponent.hpp"
+#include "TestComponent.hpp"
 
 QString TestComponent::text() const {
     return m_text;

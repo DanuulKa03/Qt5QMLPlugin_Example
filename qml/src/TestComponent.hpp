@@ -9,7 +9,7 @@ class TestComponent : public QObject {
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
 
     public:
-    explicit TestComponent(QObject *parent = nullptr);
+    explicit TestComponent(QObject *parent = nullptr){};
     QString text() const;
     void setText(const QString &text);
     signals:
