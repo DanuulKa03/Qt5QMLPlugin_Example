@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 
 import Common 1.0 as Common
 import Forms 1.0 as Forms
+import org.example.core 1.0 as Core
 
 Forms.BaseForm {
     id: formMainMenuPage
@@ -25,6 +26,20 @@ Forms.BaseForm {
         anchors.centerIn: parent
 
         spacing: 10 * Common.Consts.yCoord
+
+        Core.TestComponent {
+            id: test
+
+            text: qsTr("Hello World")
+        }
+
+        Label {
+            id: labelHelloWorld
+
+            Layout.alignment: Qt.AlignHCenter
+
+            text: test.text
+        }
 
         Button {
             id: settingButton

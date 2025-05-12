@@ -25,6 +25,7 @@ set(PROJECT_SOURCES
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Forms)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/UILibrary/Components)
+add_subdirectory(${CMAKE_SOURCE_DIR}/qml/src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/qml/Pages)
 
 qt5_add_resources_plus(QRC_FILES "qmls"
@@ -36,6 +37,12 @@ qt5_add_executable(${PROJECT_NAME}
    ${PROJECT_SOURCES}
    ${QRC_FILES}
 )
+
+# Register QML import paths for code completion
+list(APPEND QML_DIRS "${CMAKE_SOURCE_DIR}/qml")
+list(APPEND QML_DIRS "${CMAKE_SOURCE_DIR}/qml/UILibrary")
+list(REMOVE_DUPLICATES QML_DIRS)
+set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "QML import paths")
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
@@ -59,6 +66,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ComponentsLib
     Common
     Pages
+    CoreLib
 )
 
 message("---------------------- Qt5QMLPlugin_Example ----------------------")

@@ -1,7 +1,7 @@
 project(Pages VERSION 1.0 LANGUAGES CXX)
 
 set(URI_NAME "Pages")
-set(DEPENDENCIES "Common" "Forms")
+set(DEPENDENCIES "Common" "Forms" "org_example_core")
 
 if(SUBMODULE_BUILD_STATIC)
     qt5_add_library(${PROJECT_NAME} STATIC)
@@ -47,5 +47,15 @@ qt5_add_qml_module(${PROJECT_NAME}
 )
 
 foreach(depend ${DEPENDENCIES})
-    add_dependencies(${URI_NAME}plugin ${depend}plugin)
+    if(SUBMODULE_BUILD_STATIC)
+        if(depend STREQUAL "Forms")
+            add_dependencies(${PROJECT_NAME} ${depend}Lib)
+        elseif(depend STREQUAL "org_example_core")
+            add_dependencies(${PROJECT_NAME} CoreLib)
+        else()
+            add_dependencies(${PROJECT_NAME} ${depend})
+        endif()
+    else()
+        add_dependencies(${URI_NAME}plugin ${depend}plugin)
+    endif()
 endforeach()

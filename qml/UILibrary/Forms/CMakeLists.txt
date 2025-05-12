@@ -36,5 +36,9 @@ qt5_add_qml_module(${PROJECT_NAME}
 )
 
 foreach(depend ${DEPENDENCIES})
-    add_dependencies(${URI_NAME}plugin ${depend}plugin)
+    if(SUBMODULE_BUILD_STATIC)
+        add_dependencies(${PROJECT_NAME} ${depend})
+    else()
+        add_dependencies(${URI_NAME}plugin ${depend}plugin)
+    endif()
 endforeach()
