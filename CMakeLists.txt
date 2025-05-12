@@ -33,9 +33,18 @@ qt5_add_resources_plus(QRC_FILES "qmls"
     FILES ${CMAKE_SOURCE_DIR}/main.qml
 )
 
+file(GLOB_RECURSE IMAGES_PROJECT_SOURCES "${CMAKE_SOURCE_DIR}/res/images/*")
+
+qt5_add_resources_plus(QRC_FILES_IMAGES "images"
+    PREFIX "/images"
+    FILES
+        ${IMAGES_PROJECT_SOURCES}
+)
+
 qt5_add_executable(${PROJECT_NAME}
    ${PROJECT_SOURCES}
    ${QRC_FILES}
+   ${QRC_FILES_IMAGES}
 )
 
 # Register QML import paths for code completion
