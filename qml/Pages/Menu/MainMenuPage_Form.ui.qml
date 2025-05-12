@@ -36,8 +36,7 @@ Forms.BaseForm {
         Label {
             id: labelHelloWorld
 
-            Layout.preferredHeight: internal.buttonHeight
-            Layout.preferredWidth: internal.buttonWidth
+            Layout.alignment: Qt.AlignHCenter
 
             text: test.text
         }

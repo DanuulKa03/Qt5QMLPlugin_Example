@@ -38,6 +38,12 @@ qt5_add_executable(${PROJECT_NAME}
    ${QRC_FILES}
 )
 
+# Register QML import paths for code completion
+list(APPEND QML_DIRS "${CMAKE_SOURCE_DIR}/qml")
+list(APPEND QML_DIRS "${CMAKE_SOURCE_DIR}/qml/UILibrary")
+list(REMOVE_DUPLICATES QML_DIRS)
+set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "QML import paths")
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
     SUBMODULE_IMPORT_PATH="${SUBMODULE_IMPORT_PATH}"

@@ -6,7 +6,7 @@ QtObject {
     id: colors
 
     // Постоянные цвета, для любой темы
-    readonly property QtObject permanentСolors: QtObject {
+    readonly property QtObject permanentColors: QtObject {
         readonly property color blackColor: "#000000"
 
         // ...
