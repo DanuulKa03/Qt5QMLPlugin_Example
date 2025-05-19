@@ -30,7 +30,7 @@ Forms.BaseForm {
         Core.TestComponent {
             id: test
 
-            text: qsTr("Hello World")
+            text: qsTr("Cats")
         }
 
         Label {
@@ -39,6 +39,25 @@ Forms.BaseForm {
             Layout.alignment: Qt.AlignHCenter
 
             text: test.text
+        }
+
+        RowLayout {
+            Image {
+                id: cool_cat
+                source: "qrc:/images/res/images/cool_cat.png"
+            }
+
+            Image {
+                sourceSize.width: cool_cat.width; sourceSize.height: cool_cat.height
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/images/res/images/cool_cat_with_headsets.png"
+            }
+
+            Image {
+                sourceSize.width: cool_cat.width; sourceSize.height: cool_cat.height
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/images/res/images/cool_cat_with_paw_in_front_headphones.png"
+            }
         }
 
         Button {
@@ -50,8 +69,6 @@ Forms.BaseForm {
             text: qsTr("Настройки")
 
             Connections {
-                target: settingButton
-
                 function onClicked() {
                     formMainMenuPage.settingButtonClicked();
                 }
@@ -67,8 +84,6 @@ Forms.BaseForm {
             text: qsTr("Выход")
 
             Connections {
-                target: exitButton
-
                 function onClicked() {
                     formMainMenuPage.exitButtonClicked();
                 }
