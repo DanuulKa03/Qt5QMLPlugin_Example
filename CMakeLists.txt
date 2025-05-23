@@ -47,6 +47,14 @@ qt5_add_executable(${PROJECT_NAME}
    ${QRC_FILES_IMAGES}
 )
 
+qt5_add_qml_module(${PROJECT_NAME}
+    URI "org.example.test"
+    VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    RESOURCE_PREFIX "/${RELATIVE_DIR}"
+    QML_FILES
+    ${CMAKE_SOURCE_DIR}/qml/Circle.qml
+)
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
     SUBMODULE_IMPORT_PATH="${SUBMODULE_IMPORT_PATH}"

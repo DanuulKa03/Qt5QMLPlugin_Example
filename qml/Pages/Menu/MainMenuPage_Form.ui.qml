@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 import Common 1.0 as Common
 import Forms 1.0 as Forms
 import org.example.core 1.0 as Core
+import org.example.test 1.0 as Test
 
 Forms.BaseForm {
     id: formMainMenuPage
@@ -47,11 +48,15 @@ Forms.BaseForm {
                 source: "qrc:/images/res/images/cool_cat.png"
             }
 
+            ColorCircle {}
+
             Image {
                 sourceSize.width: cool_cat.width; sourceSize.height: cool_cat.height
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/images/res/images/cool_cat_with_headsets.png"
             }
+
+            ColorCircle {}
 
             Image {
                 sourceSize.width: cool_cat.width; sourceSize.height: cool_cat.height
@@ -90,4 +95,9 @@ Forms.BaseForm {
             } // Connections
         } // RoundButton
     } // ColumnLayout
+
+    component ColorCircle: Test.Circle {
+        color: "#282828"
+        size: 100
+    }
 } // Forms.BaseForm
